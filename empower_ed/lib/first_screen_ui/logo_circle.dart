@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:empower_ed/first_screen_ui/logo_empowered.dart';
+import 'package:empower_ed/second_screen_ui/second_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -10,15 +11,14 @@ class LogoCircle extends StatefulWidget {
   final int radiusStepsNumber;
   final int fadingTimeInMillis;
   final int fadingStep;
-  Function()? onAnimationEnded;
   
-  LogoCircle(
+  const LogoCircle(
     this.maxRadius, 
     this.minRadius, 
     this.radiusStepsNumber, 
     this.fadingTimeInMillis, 
     this.fadingStep,
-    {super.key, this.onAnimationEnded}
+    {super.key}
   );
 
   @override
@@ -57,21 +57,23 @@ class LogoCircleState extends State<LogoCircle> {
         AnimatedOpacity(
           opacity: opacityLevel[i], 
           duration: Duration(milliseconds: widget.fadingTimeInMillis + (i * widget.fadingStep)),
-          onEnd: i == widget.radiusStepsNumber - 1 ? widget.onAnimationEnded : null,
+          onEnd: i == widget.radiusStepsNumber - 1 ? () => {
+            Navigator.of(context).pushNamed("second_screen")
+          } : null,
           child: Stack(
             alignment: AlignmentGeometry.center,
             children: [
               Container(
-                width: (widget.maxRadius - (i * step) + 5).toDouble(),
-                height: (widget.maxRadius - (i * step) + 5).toDouble(),
+                width: (widget.maxRadius - (i * step)).toDouble(),
+                height: (widget.maxRadius - (i * step)).toDouble(),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle
                 ),
               ),
               i == widget.radiusStepsNumber - 1 ? LogoEmpowered(widget.minRadius.toDouble()) : Container(
-                width: (widget.maxRadius - (i * step)).toDouble(),
-                height: (widget.maxRadius - (i * step)).toDouble(),
+                width: (widget.maxRadius - (i * step) - 5).toDouble(),
+                height: (widget.maxRadius - (i * step) - 5).toDouble(),
                 decoration: BoxDecoration(
                   color: const Color(0xfff6fbfa),
                   shape: BoxShape.circle
