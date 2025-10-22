@@ -6,6 +6,10 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     fontSize: 22.0
   );
+  static var titleSmall = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 18.0
+  );
   static var body = TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 16.0,
